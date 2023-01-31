@@ -17,7 +17,19 @@
     <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200939_added_entity_Profile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200940_added_entity_Post.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200941_added_entity_Like.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200942_added_entity_Follow.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200943_added_entity_Reply.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200944_added_entity_Music.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230131200939_added_entity_constraints_Profile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200940_added_entity_constraints_Post.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200941_added_entity_constraints_Like.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200942_added_entity_constraints_Follow.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200943_added_entity_constraints_Reply.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230131200944_added_entity_constraints_Music.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,34 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20230131200942",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "follow",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Follow",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "follower",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "followed",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

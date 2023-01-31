@@ -42,13 +42,13 @@ export const PasswordResetSlice = createSlice({
         ...initialState,
         loading: false,
         resetPasswordSuccess: true,
-        successMessage: 'Check your emails for details on how to reset your password.',
+        successMessage: 'reset.request.messages.success',
       }))
       .addCase(handlePasswordResetFinish.fulfilled, () => ({
         ...initialState,
         loading: false,
         resetPasswordSuccess: true,
-        successMessage: "Your password couldn't be reset. Remember a password request is only valid for 24 hours.",
+        successMessage: 'reset.finish.messages.success',
       }))
       .addMatcher(isPending(handlePasswordResetInit, handlePasswordResetFinish), state => {
         state.loading = true;

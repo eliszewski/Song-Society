@@ -2,11 +2,16 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import sinon from 'sinon';
+import { TranslatorContext } from 'react-jhipster';
 
 import account, { updateAccount, saveAccountSettings, reset } from './settings.reducer';
 import { getAccount } from 'app/shared/reducers/authentication';
 
 describe('Settings reducer tests', () => {
+  beforeAll(() => {
+    TranslatorContext.registerTranslations('en', {});
+  });
+
   describe('Common tests', () => {
     it('should return the initial state', () => {
       const toTest = account(undefined, { type: '' });
@@ -65,7 +70,7 @@ describe('Settings reducer tests', () => {
     const resolvedObject = { value: 'whatever' };
     beforeEach(() => {
       const mockStore = configureStore([thunk]);
-      store = mockStore({});
+      store = mockStore({ authentication: { account: { langKey: 'en' } } });
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
       axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
     });

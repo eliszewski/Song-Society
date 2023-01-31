@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import * as toastify from 'react-toastify'; // synthetic default import doesn't work here due to mocking.
 import sinon from 'sinon';
+import { TranslatorContext } from 'react-jhipster';
 
 import notificationMiddleware from './notification-middleware';
 
@@ -152,6 +153,10 @@ describe('Notification Middleware', () => {
 
   const makeStore = () => applyMiddleware(notificationMiddleware)(createStore)(() => null);
 
+  beforeAll(() => {
+    TranslatorContext.registerTranslations('en', {});
+  });
+
   beforeEach(() => {
     store = makeStore();
     sinon.spy(toastify.toast, 'error');
@@ -190,19 +195,19 @@ describe('Notification Middleware', () => {
   it('should trigger an error toast message and return error for 400 response code', () => {
     expect(store.dispatch(VALIDATION_ERROR).error.response.data.message).toEqual('error.validation');
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Error on field "MinField"');
+    expect(toastMsg).toContain('error.Size');
   });
 
   it('should trigger an error toast message and return error for 404 response code', () => {
     expect(store.dispatch(NOT_FOUND_ERROR).error.response.data.message).toEqual('Not found');
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Not found');
+    expect(toastMsg).toContain('error.url.not.found');
   });
 
   it('should trigger an error toast message and return error for 0 response code', () => {
     expect(store.dispatch(NO_SERVER_ERROR).error.response.status).toEqual(0);
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Server not reachable');
+    expect(toastMsg).toContain('error.server.not.reachable');
   });
 
   it('should trigger an error toast message and return error for headers containing errors', () => {

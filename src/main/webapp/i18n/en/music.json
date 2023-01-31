@@ -1,0 +1,27 @@
+{
+  "songSocietyApp": {
+    "music": {
+      "home": {
+        "title": "Music",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Music",
+        "createOrEditLabel": "Create or edit a Music",
+        "notFound": "No Music found"
+      },
+      "created": "A new Music is created with identifier {{ param }}",
+      "updated": "A Music is updated with identifier {{ param }}",
+      "deleted": "A Music is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Music {{ id }}?"
+      },
+      "detail": {
+        "title": "Music"
+      },
+      "id": "ID",
+      "songName": "Song Name",
+      "artistName": "Artist Name",
+      "albumName": "Album Name",
+      "user": "User"
+    }
+  }
+}

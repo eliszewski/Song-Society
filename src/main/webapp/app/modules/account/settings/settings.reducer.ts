@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
+import { Storage } from 'react-jhipster';
 import { getSession } from 'app/shared/reducers/authentication';
 import { AppThunk } from 'app/config/store';
 import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -20,6 +20,10 @@ const apiUrl = 'api/account';
 
 export const saveAccountSettings: (account: any) => AppThunk = account => async dispatch => {
   await dispatch(updateAccount(account));
+
+  if (Storage.session.get(`locale`)) {
+    Storage.session.remove(`locale`);
+  }
 
   dispatch(getSession());
 };
@@ -52,7 +56,7 @@ export const SettingsSlice = createSlice({
         state.loading = false;
         state.updateSuccess = true;
         state.updateFailure = false;
-        state.successMessage = 'Settings saved!';
+        state.successMessage = 'settings.messages.success';
       });
   },
 });

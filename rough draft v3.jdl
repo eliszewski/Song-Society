@@ -9,6 +9,17 @@ application {
   }
   entities *
 }
+application {
+  config {
+    baseName SongSociety,
+    applicationType monolith,
+    packageName com.society
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    clientFramework react
+  }
+  entities *
+}
 
 entity Profile {
 societyTag String required 
@@ -21,6 +32,10 @@ date ZonedDateTime required
 content TextBlob required
 }
 entity Like{
+date ZonedDateTime required
+}
+
+entity Follow {
 date ZonedDateTime required
 }
 
@@ -48,8 +63,8 @@ relationship ManyToOne {
 Post{user(login)} to User
 Reply{user(login)} to User
 Like{user(login)} to User
-Like{post} to Post,
-Reply{post} to Post
+Follow{follower(login)} to User
+Follow{followed(login)} to User
 }
 
 relationship ManyToMany {
@@ -59,3 +74,5 @@ Music{user(login)} to User
 paginate Post, Like, Reply with infinite-scroll
 dto * with mapstruct
 service * with serviceClass
+
+
