@@ -12,8 +12,8 @@ A social media website for music lovers, built with JHipster, React, Spring Boot
 
 ## Getting Started
 
-1.  Clone the repository: `git clone https://github.com/<your-username>/ExtraMinty.git`
-2.  Navigate to the project directory: `cd ExtraMinty`
+1.  Clone the repository: `git clone https://github.com/<your-username>/Song-Society-v3.git`
+2.  Navigate to the project directory: `cd SongSociety`
 3.  Install the backend dependencies: `./mvnw clean install`
 4.  Install the frontend dependencies: `yarn install`
 5.  Start the development server: `./mvnw` and `yarn start`
