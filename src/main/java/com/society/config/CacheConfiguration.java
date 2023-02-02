@@ -48,6 +48,15 @@ public class CacheConfiguration {
             createCache(cm, com.society.domain.User.class.getName());
             createCache(cm, com.society.domain.Authority.class.getName());
             createCache(cm, com.society.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.society.domain.Profile.class.getName());
+            createCache(cm, com.society.domain.Post.class.getName());
+            createCache(cm, com.society.domain.Post.class.getName() + ".likes");
+            createCache(cm, com.society.domain.Post.class.getName() + ".replies");
+            createCache(cm, com.society.domain.Like.class.getName());
+            createCache(cm, com.society.domain.Follow.class.getName());
+            createCache(cm, com.society.domain.Reply.class.getName());
+            createCache(cm, com.society.domain.Music.class.getName());
+            createCache(cm, com.society.domain.Music.class.getName() + ".users");
             // jhipster-needle-ehcache-add-entry
         };
     }

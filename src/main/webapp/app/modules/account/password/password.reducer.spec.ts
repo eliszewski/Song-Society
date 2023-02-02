@@ -2,10 +2,15 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
+import { TranslatorContext } from 'react-jhipster';
 
 import password, { savePassword, reset } from './password.reducer';
 
 describe('Password reducer tests', () => {
+  beforeAll(() => {
+    TranslatorContext.registerTranslations('en', {});
+  });
+
   describe('Common tests', () => {
     it('should return the initial state', () => {
       const toTest = password(undefined, { type: '' });

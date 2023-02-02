@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Badge } from 'reactstrap';
-import { TextFormat } from 'react-jhipster';
+import { Translate, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT } from 'app/config/constants';
-
+import { languages } from 'app/config/translation';
 import { getUser } from './user-management.reducer';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -23,34 +23,64 @@ export const UserManagementDetail = () => {
   return (
     <div>
       <h2>
-        User [<strong>{user.login}</strong>]
+        <Translate contentKey="userManagement.detail.title">User</Translate> [<strong>{user.login}</strong>]
       </h2>
       <Row size="md">
         <dl className="jh-entity-details">
-          <dt>Login</dt>
+          <dt>
+            <Translate contentKey="userManagement.login">Login</Translate>
+          </dt>
           <dd>
             <span>{user.login}</span>&nbsp;
-            {user.activated ? <Badge color="success">Activated</Badge> : <Badge color="danger">Deactivated</Badge>}
+            {user.activated ? (
+              <Badge color="success">
+                <Translate contentKey="userManagement.activated">Activated</Translate>
+              </Badge>
+            ) : (
+              <Badge color="danger">
+                <Translate contentKey="userManagement.deactivated">Deactivated</Translate>
+              </Badge>
+            )}
           </dd>
-          <dt>First name</dt>
+          <dt>
+            <Translate contentKey="userManagement.firstName">First Name</Translate>
+          </dt>
           <dd>{user.firstName}</dd>
-          <dt>Last name</dt>
+          <dt>
+            <Translate contentKey="userManagement.lastName">Last Name</Translate>
+          </dt>
           <dd>{user.lastName}</dd>
-          <dt>Email</dt>
+          <dt>
+            <Translate contentKey="userManagement.email">Email</Translate>
+          </dt>
           <dd>{user.email}</dd>
-          <dt>Created by</dt>
+          <dt>
+            <Translate contentKey="userManagement.langKey">Lang Key</Translate>
+          </dt>
+          <dd>{user.langKey ? languages[user.langKey].name : undefined}</dd>
+          <dt>
+            <Translate contentKey="userManagement.createdBy">Created By</Translate>
+          </dt>
           <dd>{user.createdBy}</dd>
-          <dt>Created date</dt>
+          <dt>
+            <Translate contentKey="userManagement.createdDate">Created Date</Translate>
+          </dt>
           <dd>{user.createdDate ? <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
-          <dt>Modified by</dt>
+          <dt>
+            <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
+          </dt>
           <dd>{user.lastModifiedBy}</dd>
-          <dt>Modified date</dt>
+          <dt>
+            <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
+          </dt>
           <dd>
             {user.lastModifiedDate ? (
               <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
             ) : null}
           </dd>
-          <dt>Profiles</dt>
+          <dt>
+            <Translate contentKey="userManagement.profiles">Profiles</Translate>
+          </dt>
           <dd>
             <ul className="list-unstyled">
               {user.authorities
@@ -65,7 +95,10 @@ export const UserManagementDetail = () => {
         </dl>
       </Row>
       <Button tag={Link} to="/admin/user-management" replace color="info">
-        <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+        <FontAwesomeIcon icon="arrow-left" />{' '}
+        <span className="d-none d-md-inline">
+          <Translate contentKey="entity.action.back">Back</Translate>
+        </span>
       </Button>
     </div>
   );

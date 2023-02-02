@@ -1,0 +1,34 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20230131200941",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "jhi_like",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Like",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "likes",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

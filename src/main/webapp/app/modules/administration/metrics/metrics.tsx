@@ -9,6 +9,7 @@ import {
   JvmThreads,
   EndpointsRequestsMetrics,
   SystemMetrics,
+  Translate,
 } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -37,19 +38,24 @@ export const MetricsPage = () => {
   return (
     <div>
       <h2 id="metrics-page-heading" data-cy="metricsPageHeading">
-        Application Metrics
+        <Translate contentKey="metrics.title">Application Metrics</Translate>
       </h2>
       <p>
         <Button onClick={getMetrics} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'} disabled={isFetching}>
           <FontAwesomeIcon icon="sync" />
-          &nbsp; Refresh
+          &nbsp;
+          <Translate component="span" contentKey="health.refresh.button">
+            Refresh
+          </Translate>
         </Button>
       </p>
       <hr />
 
       <Row>
         <Col sm="12">
-          <h3>JVM Metrics</h3>
+          <h3>
+            <Translate contentKey="metrics.jvm.title">JVM Metrics</Translate>
+          </h3>
           <Row>
             <Col md="4">{metrics?.jvm ? <JvmMemory jvmMetrics={metrics.jvm} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} /> : ''}</Col>
             <Col md="4">{threadDump ? <JvmThreads jvmThreads={threadDump} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} /> : ''}</Col>

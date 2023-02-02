@@ -122,9 +122,7 @@ public class UserResource {
             mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
-                .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
-                )
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
     }
@@ -153,7 +151,7 @@ public class UserResource {
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HeaderUtil.createAlert(applicationName, "userManagement.updated", userDTO.getLogin())
         );
     }
 
@@ -204,9 +202,6 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createAlert(applicationName, "A user is deleted with identifier " + login, login))
-            .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
     }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table, Badge } from 'reactstrap';
-import { TextFormat, JhiPagination, JhiItemCount, getSortState } from 'react-jhipster';
+import { Translate, TextFormat, JhiPagination, JhiItemCount, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT } from 'app/config/constants';
@@ -87,13 +87,14 @@ export const UserManagement = () => {
   return (
     <div>
       <h2 id="user-management-page-heading" data-cy="userManagementPageHeading">
-        Users
+        <Translate contentKey="userManagement.home.title">Users</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <Translate contentKey="userManagement.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="new" className="btn btn-primary jh-create-entity">
-            <FontAwesomeIcon icon="plus" /> Create a new user
+            <FontAwesomeIcon icon="plus" /> <Translate contentKey="userManagement.home.createLabel">Create a new user</Translate>
           </Link>
         </div>
       </h2>
@@ -101,29 +102,35 @@ export const UserManagement = () => {
         <thead>
           <tr>
             <th className="hand" onClick={sort('id')}>
-              ID
+              <Translate contentKey="global.field.id">ID</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('login')}>
-              Login
+              <Translate contentKey="userManagement.login">Login</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('email')}>
-              Email
+              <Translate contentKey="userManagement.email">Email</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th />
-            <th>Profiles</th>
+            <th className="hand" onClick={sort('langKey')}>
+              <Translate contentKey="userManagement.langKey">Lang Key</Translate>
+              <FontAwesomeIcon icon="sort" />
+            </th>
+            <th>
+              <Translate contentKey="userManagement.profiles">Profiles</Translate>
+            </th>
             <th className="hand" onClick={sort('createdDate')}>
-              Created date
+              <Translate contentKey="userManagement.createdDate">Created Date</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('lastModifiedBy')}>
-              Modified by
+              <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th id="modified-date-sort" className="hand" onClick={sort('lastModifiedDate')}>
-              Modified date
+              <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
             <th />
@@ -142,14 +149,15 @@ export const UserManagement = () => {
               <td>
                 {user.activated ? (
                   <Button color="success" onClick={toggleActive(user)}>
-                    Activated
+                    <Translate contentKey="userManagement.activated">Activated</Translate>
                   </Button>
                 ) : (
                   <Button color="danger" onClick={toggleActive(user)}>
-                    Deactivated
+                    <Translate contentKey="userManagement.deactivated">Deactivated</Translate>
                   </Button>
                 )}
               </td>
+              <td>{user.langKey}</td>
               <td>
                 {user.authorities
                   ? user.authorities.map((authority, j) => (
@@ -171,13 +179,22 @@ export const UserManagement = () => {
               <td className="text-end">
                 <div className="btn-group flex-btn-group-container">
                   <Button tag={Link} to={user.login} color="info" size="sm">
-                    <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                    <FontAwesomeIcon icon="eye" />{' '}
+                    <span className="d-none d-md-inline">
+                      <Translate contentKey="entity.action.view">View</Translate>
+                    </span>
                   </Button>
                   <Button tag={Link} to={`${user.login}/edit`} color="primary" size="sm">
-                    <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                    <FontAwesomeIcon icon="pencil-alt" />{' '}
+                    <span className="d-none d-md-inline">
+                      <Translate contentKey="entity.action.edit">Edit</Translate>
+                    </span>
                   </Button>
                   <Button tag={Link} to={`${user.login}/delete`} color="danger" size="sm" disabled={account.login === user.login}>
-                    <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                    <FontAwesomeIcon icon="trash" />{' '}
+                    <span className="d-none d-md-inline">
+                      <Translate contentKey="entity.action.delete">Delete</Translate>
+                    </span>
                   </Button>
                 </div>
               </td>

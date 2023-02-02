@@ -1,0 +1,38 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20230131200944",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "music",
+  "fields": [
+    {
+      "fieldName": "songName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "artistName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "albumName",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Music",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

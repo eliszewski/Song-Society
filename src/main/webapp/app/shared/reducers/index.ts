@@ -1,6 +1,7 @@
 import { ReducersMapObject, combineReducers } from '@reduxjs/toolkit';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 
+import locale from './locale';
 import authentication from './authentication';
 import applicationProfile from './application-profile';
 
@@ -16,6 +17,7 @@ import entitiesReducers from 'app/entities/reducers';
 
 const rootReducer: ReducersMapObject = {
   authentication,
+  locale,
   applicationProfile,
   administration,
   userManagement,

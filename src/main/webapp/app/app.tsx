@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getSession } from 'app/shared/reducers/authentication';
 import { getProfile } from 'app/shared/reducers/application-profile';
+import { setLocale } from 'app/shared/reducers/locale';
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
@@ -27,6 +28,7 @@ export const App = () => {
     dispatch(getProfile());
   }, []);
 
+  const currentLocale = useAppSelector(state => state.locale.currentLocale);
   const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
   const ribbonEnv = useAppSelector(state => state.applicationProfile.ribbonEnv);
@@ -42,6 +44,7 @@ export const App = () => {
           <Header
             isAuthenticated={isAuthenticated}
             isAdmin={isAdmin}
+            currentLocale={currentLocale}
             ribbonEnv={ribbonEnv}
             isInProduction={isInProduction}
             isOpenAPIEnabled={isOpenAPIEnabled}

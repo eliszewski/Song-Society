@@ -1,0 +1,40 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20230131200943",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "reply",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reply",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "replies",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

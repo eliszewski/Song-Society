@@ -5,6 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const { hashElement } = require('folder-hash');
+const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 const utils = require('./utils.js');
 const environment = require('./environment');
 
@@ -32,6 +34,12 @@ const getTsLoaderRule = env => {
 
 module.exports = async options => {
   const development = options.env === 'development';
+  const languagesHash = await hashElement(path.resolve(__dirname, '../src/main/webapp/i18n'), {
+    algo: 'md5',
+    encoding: 'hex',
+    files: { include: ['*.json'] },
+  });
+
   return merge(
     {
       cache: {
@@ -87,6 +95,7 @@ module.exports = async options => {
           LOG_LEVEL: development ? 'info' : 'error',
         }),
         new webpack.DefinePlugin({
+          I18N_HASH: JSON.stringify(languagesHash.hash),
           DEVELOPMENT: JSON.stringify(development),
           VERSION: JSON.stringify(environment.VERSION),
           SERVER_API_URL: JSON.stringify(environment.SERVER_API_URL),
@@ -125,6 +134,14 @@ module.exports = async options => {
           chunksSortMode: 'auto',
           inject: 'body',
           base: '/',
+        }),
+        new MergeJsonWebpackPlugin({
+          output: {
+            groupBy: [
+              { pattern: './src/main/webapp/i18n/en/*.json', fileName: './i18n/en.json' },
+              // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
+            ],
+          },
         }),
       ],
     }
