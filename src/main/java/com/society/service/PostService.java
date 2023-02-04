@@ -1,10 +1,15 @@
 package com.society.service;
 
+import com.society.domain.Follow;
 import com.society.domain.Post;
+import com.society.domain.User;
 import com.society.repository.PostRepository;
 import com.society.service.dto.PostDTO;
 import com.society.service.mapper.PostMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -117,5 +122,27 @@ public class PostService {
     public void delete(Long id) {
         log.debug("Request to delete Post : {}", id);
         postRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the posts for the followed.
+     *
+     * @param list of follows
+     * @return the list of posts.
+     */
+    @Transactional(readOnly = true)
+    public List<PostDTO> findAllPostsForFollowedUsers(List<Follow> follows) {
+        log.debug("Request to get all followed Users Posts");
+        List<Post> followedUsersPosts = new ArrayList<>();
+        for (Follow follow : follows) {
+            User followedUser = follow.getFollowed();
+            List<Post> followedUserPosts = postRepository.findByUserId(followedUser.getId());
+            followedUsersPosts.addAll(followedUserPosts);
+        }
+        return followedUsersPosts
+            .stream()
+            .sorted((p1, p2) -> p2.getDate().compareTo(p1.getDate()))
+            .map(postMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

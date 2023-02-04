@@ -17,6 +17,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select post from Post post where post.user.login = ?#{principal.username}")
     List<Post> findByUserIsCurrentUser();
 
+    List<Post> findByUserId(Long UserId);
+
     default Optional<Post> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
