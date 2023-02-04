@@ -15,12 +15,19 @@ export const Feed = () => {
 
   return (
     <div>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h3>{post.user.login}</h3>
-          <p>{post.content}</p>
+      <h1>Your feed</h1>
+      {posts && posts.length > 0 ? (
+        <div>
+          {posts.map(post => (
+            <div key={post.id}>
+              <h3>{post.user.login}</h3>
+              <p>{post.content}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <h2> No Posts Found</h2>
+      )}
     </div>
   );
 };
