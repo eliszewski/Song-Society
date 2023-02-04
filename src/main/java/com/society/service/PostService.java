@@ -7,6 +7,7 @@ import com.society.repository.PostRepository;
 import com.society.service.dto.PostDTO;
 import com.society.service.mapper.PostMapper;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
