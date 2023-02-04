@@ -14,6 +14,7 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
+import Feed from './customUser/feed/feed';
 
 const loading = <div>loading ...</div>;
 
@@ -34,6 +35,14 @@ const AppRoutes = () => {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
+        <Route
+          path="feed"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
+              <Feed />
+            </PrivateRoute>
+          }
+        />
         <Route path="account">
           <Route
             path="*"

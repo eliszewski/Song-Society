@@ -120,4 +120,19 @@ public class FollowService {
         log.debug("Request to delete Follow : {}", id);
         followRepository.deleteById(id);
     }
+
+    /**
+     * Find all follows where current user is follower
+     *
+     *
+     */
+    @Transactional(readOnly = true)
+    public List<FollowDTO> findAllFollowedByUser() {
+        log.debug("Request to get all Follows");
+        return followRepository
+            .findByFollowerIsCurrentUser()
+            .stream()
+            .map(followMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 }

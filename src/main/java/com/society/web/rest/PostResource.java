@@ -1,5 +1,6 @@
 package com.society.web.rest;
 
+import com.society.repository.FollowRepository;
 import com.society.repository.PostRepository;
 import com.society.service.PostService;
 import com.society.service.dto.PostDTO;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +44,9 @@ public class PostResource {
     private final PostService postService;
 
     private final PostRepository postRepository;
+
+    @Autowired
+    private FollowRepository followRepository;
 
     public PostResource(PostService postService, PostRepository postRepository) {
         this.postService = postService;
@@ -159,6 +164,13 @@ public class PostResource {
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/posts/followed")
+    public ResponseEntity<List<PostDTO>> getFollowedUsersPosts() {
+        log.debug("REST request to get a list of followed Users' post for current User");
+        List<PostDTO> posts = postService.findAllPostsForFollowedUsers(followRepository.findByFollowerIsCurrentUser());
+        return ResponseEntity.ok(posts);
     }
 
     /**
