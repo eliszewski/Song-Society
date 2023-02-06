@@ -1,5 +1,7 @@
 package com.society.web.rest;
 
+import com.society.domain.User;
+import com.society.repository.PostRepository;
 import com.society.repository.ProfileRepository;
 import com.society.service.ProfileService;
 import com.society.service.dto.ProfileDTO;
@@ -14,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,9 @@ public class ProfileResource {
     private final ProfileService profileService;
 
     private final ProfileRepository profileRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     public ProfileResource(ProfileService profileService, ProfileRepository profileRepository) {
         this.profileService = profileService;
@@ -166,6 +172,14 @@ public class ProfileResource {
     public ResponseEntity<ProfileDTO> getProfile(@PathVariable Long id) {
         log.debug("REST request to get Profile : {}", id);
         Optional<ProfileDTO> profileDTO = profileService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(profileDTO);
+    }
+
+    @GetMapping("/profiles/post/{id}")
+    public ResponseEntity<ProfileDTO> getProfileByUserId(Long id) {
+        log.debug("REST request to get  author Profile for post : {}", id);
+        Long authorId = postRepository.findOneWithEagerRelationships(id).get().getUser().getId();
+        Optional<ProfileDTO> profileDTO = profileService.findOneByUserId(authorId);
         return ResponseUtil.wrapOrNotFound(profileDTO);
     }
 
