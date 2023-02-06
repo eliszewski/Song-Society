@@ -155,4 +155,10 @@ public class ProfileService {
         ); else log.debug("No profile found for user {}", user.getLogin());
         return null;
     }
+
+    @Transactional(readOnly = true)
+    public Optional<ProfileDTO> findOneByUserId(Long id) {
+        log.debug("Request to get Profile for user : {}", id);
+        return profileRepository.findOneByUserId(id).map(profileMapper::toDto);
+    }
 }

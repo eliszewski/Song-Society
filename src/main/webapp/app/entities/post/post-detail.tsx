@@ -8,14 +8,27 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './post.reducer';
+import { useState } from 'react';
+import { IProfile } from '../../shared/model/profile.model';
+import axios from 'axios';
 
 export const PostDetail = () => {
+  const [author, setAuthor] = useState<IProfile>(null);
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
 
   useEffect(() => {
     dispatch(getEntity(id));
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async (id: number) => {
+      const result = await axios.get(`/api/profiles/post/{id}?id=${id}`);
+      setAuthor(result.data);
+    };
+    fetchProfile(Number(id));
+    console.log(fetchProfile(Number(id)));
   }, []);
 
   const postEntity = useAppSelector(state => state.post.entity);
@@ -26,12 +39,6 @@ export const PostDetail = () => {
           <Translate contentKey="songSocietyApp.post.detail.title">Post</Translate>
         </h2>
         <dl className="jh-entity-details">
-          <dt>
-            <span id="id">
-              <Translate contentKey="global.field.id">ID</Translate>
-            </span>
-          </dt>
-          <dd>{postEntity.id}</dd>
           <dt>
             <span id="date">
               <Translate contentKey="songSocietyApp.post.date">Date</Translate>
@@ -47,9 +54,9 @@ export const PostDetail = () => {
           <dt>
             <Translate contentKey="songSocietyApp.post.user">User</Translate>
           </dt>
-          <dd>{postEntity.user ? postEntity.user.login : ''}</dd>
+          <dd>{author ? <a href={`/profile/${author.id}`}>{author.societyTag}</a> : ''}</dd>
         </dl>
-        <Button tag={Link} to="/post" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/feed" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
