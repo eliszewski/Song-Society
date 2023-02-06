@@ -4,8 +4,10 @@ public class UserProfileDTO {
 
     private String login;
     private String societyTag;
+    private Long id;
 
-    public UserProfileDTO(String login, String societyTag) {
+    public UserProfileDTO(Long id, String login, String societyTag) {
+        this.id = id;
         this.login = login;
         this.societyTag = societyTag;
     }
@@ -24,5 +26,13 @@ public class UserProfileDTO {
 
     public void setSocietyTag(String societyTag) {
         this.societyTag = societyTag;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

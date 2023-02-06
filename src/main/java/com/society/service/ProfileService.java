@@ -148,10 +148,11 @@ public class ProfileService {
     */
     public UserProfileDTO createUserProfileDTOForUser(User user) {
         Optional<Profile> profile = profileRepository.findOneByUserId(user.getId());
-        if (profile.isPresent()) return new UserProfileDTO(user.getLogin(), profile.get().getSocietyTag()); else log.debug(
-            "No profile found for user {}",
-            user.getLogin()
-        );
+        if (profile.isPresent()) return new UserProfileDTO(
+            profile.get().getId(),
+            user.getLogin(),
+            profile.get().getSocietyTag()
+        ); else log.debug("No profile found for user {}", user.getLogin());
         return null;
     }
 }
