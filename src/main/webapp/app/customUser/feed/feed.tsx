@@ -46,15 +46,11 @@ export const Feed = () => {
               return (
                 <tr key={post.id}>
                   <td>{post.date ? <TextFormat type="date" value={post.date} format={APP_DATE_FORMAT} /> : null}</td>
-                  {/* <td>{userProfile ? userProfile.societyTag : 'N/A'}</td> */}
-                  <td>{userProfile ? <a href={`/profile/${userProfile.id}`}>{userProfile.societyTag}</a> : 'N/A'}</td>
+                  <td>{userProfile ? <a href={`/profile/${userProfile.id}`}>{userProfile.societyTag}</a> : 'User not found'}</td>
                   <td>{post.content}</td>
                   <td>
                     <Button tag={Link} to={`/post/${post.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                      <FontAwesomeIcon icon="eye" />{' '}
-                      <span className="d-none d-md-inline">
-                        <Translate contentKey="entity.action.view">Expand</Translate>
-                      </span>
+                      <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Expand</span>
                     </Button>
                   </td>
                 </tr>
@@ -67,31 +63,6 @@ export const Feed = () => {
       )}
     </div>
   );
-  // return (
-  //   <table>
-  //     <thead>
-  //       <tr>
-  //         <th>Username</th>
-  //         <th>Society Tag</th>
-  //         <th>Post</th>
-  //       </tr>
-  //     </thead>
-  //     <tbody>
-  //       {posts.map(post => {
-  //         const userProfile = followedProfiles.find(
-  //           profile => profile.login === post.user.login
-  //         );
-  //         return (
-  //           <tr key={post.id}>
-  //             <td>{post.user.login}</td>
-  //             <td>{userProfile ? userProfile.societyTag : 'N/A'}</td>
-  //             <td>{post.content}</td>
-  //           </tr>
-  //         );
-  //       })}
-  //     </tbody>
-  //   </table>
-  // );
 };
 
 export default Feed;
