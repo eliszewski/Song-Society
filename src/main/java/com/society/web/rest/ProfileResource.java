@@ -3,6 +3,7 @@ package com.society.web.rest;
 import com.society.repository.ProfileRepository;
 import com.society.service.ProfileService;
 import com.society.service.dto.ProfileDTO;
+import com.society.service.dto.UserProfileDTO;
 import com.society.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -142,6 +143,17 @@ public class ProfileResource {
     public List<ProfileDTO> getAllProfiles(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Profiles");
         return profileService.findAll();
+    }
+
+    /**
+        REST endpoint to get the society tags for all the profiles of the users that the current user is following.
+        @return A list of {@link UserProfileDTO} objects representing the profiles of the followed users. Each DTO
+        object will contain the login of the user and their society tag.
+    */
+    @GetMapping("/profiles/followed-tags")
+    public List<UserProfileDTO> getAllFollowedUsersTags() {
+        log.debug("REST request to get all Profiles");
+        return profileService.findAllForFollowedUsers();
     }
 
     /**

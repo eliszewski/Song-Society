@@ -1,6 +1,7 @@
 package com.society.service;
 
 import com.society.domain.Follow;
+import com.society.domain.User;
 import com.society.repository.FollowRepository;
 import com.society.service.dto.FollowDTO;
 import com.society.service.mapper.FollowMapper;
@@ -133,6 +134,16 @@ public class FollowService {
             .findByFollowerIsCurrentUser()
             .stream()
             .map(followMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> findAllUsersFollowedByUser() {
+        log.debug("Request to get all users followed");
+        return followRepository
+            .findByFollowerIsCurrentUser()
+            .stream()
+            .map(Follow::getFollowed)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 }
