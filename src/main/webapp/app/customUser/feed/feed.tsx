@@ -36,7 +36,7 @@ export const Feed = () => {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Username</th>
+              <th>Posted By</th>
               <th>Post</th>
             </tr>
           </thead>
@@ -46,7 +46,8 @@ export const Feed = () => {
               return (
                 <tr key={post.id}>
                   <td>{post.date ? <TextFormat type="date" value={post.date} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{userProfile ? userProfile.societyTag : 'N/A'}</td>
+                  {/* <td>{userProfile ? userProfile.societyTag : 'N/A'}</td> */}
+                  <td>{userProfile ? <a href={`/profile/${userProfile.id}`}>{userProfile.societyTag}</a> : 'N/A'}</td>
                   <td>{post.content}</td>
                   <td>
                     <Button tag={Link} to={`/post/${post.id}`} color="info" size="sm" data-cy="entityDetailsButton">
