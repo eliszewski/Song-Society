@@ -3,6 +3,7 @@ package com.society.web.rest;
 import com.society.repository.LikeRepository;
 import com.society.service.LikeService;
 import com.society.service.dto.LikeDTO;
+import com.society.service.mapper.LikeMapper;
 import com.society.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -172,6 +173,13 @@ public class LikeResource {
         log.debug("REST request to get Like : {}", id);
         Optional<LikeDTO> likeDTO = likeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(likeDTO);
+    }
+
+    @GetMapping("/likes/post/{id}")
+    public ResponseEntity<List<LikeDTO>> getLikesForPost(Long id) {
+        log.debug("REST request to get Like : {}", id);
+        List<LikeDTO> likeDTO = likeService.convertListToDTO(likeRepository.findByPostId(id));
+        return ResponseEntity.ok(likeDTO);
     }
 
     /**

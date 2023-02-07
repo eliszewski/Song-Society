@@ -4,7 +4,10 @@ import com.society.domain.Like;
 import com.society.repository.LikeRepository;
 import com.society.service.dto.LikeDTO;
 import com.society.service.mapper.LikeMapper;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -117,5 +120,9 @@ public class LikeService {
     public void delete(Long id) {
         log.debug("Request to delete Like : {}", id);
         likeRepository.deleteById(id);
+    }
+
+    public List<LikeDTO> convertListToDTO(List<Like> likes) {
+        return likes.stream().map(likeMapper::toDto).collect(Collectors.toList());
     }
 }

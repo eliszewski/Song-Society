@@ -12,12 +12,31 @@ import { useState } from 'react';
 import { IProfile } from '../../shared/model/profile.model';
 import axios from 'axios';
 import './post-buttons.scss';
+import { ILike } from '../../shared/model/like.model';
+import { IUser } from '../../shared/model/user.model';
+import post from '.';
+import { IPost } from 'app/shared/model/post.model';
 
 export const PostDetail = () => {
   const [author, setAuthor] = useState<IProfile>(null);
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
+
+  const [likes, setLikes] = useState<ILike[]>([]);
+  const [user, setUser] = useState<IUser>();
+
+  const createLike = async (user: IUser, post: IPost): Promise<ILike> => {
+    const date = new Date().toISOString();
+    const like: ILike = { date, user, post };
+    try {
+      const response = await axios.post('/api/likes', like);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     dispatch(getEntity(id));
@@ -29,6 +48,22 @@ export const PostDetail = () => {
       setAuthor(result.data);
     };
     fetchProfile(Number(id));
+  }, []);
+
+  useEffect(() => {
+    const fetchLikes = async (id: number) => {
+      const result = await axios.get(`/api//likes/post/{id}?id=${id}`);
+      setLikes(result.data);
+    };
+    fetchLikes(Number(id));
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await axios.get(`/api//account`);
+      setUser(result.data);
+    };
+    fetchUser();
   }, []);
 
   const postEntity = useAppSelector(state => state.post.entity);
@@ -70,8 +105,8 @@ export const PostDetail = () => {
           </span>
         </Button>
         &nbsp;
-        <Button className="like-button-red">
-          <FontAwesomeIcon icon="heart" color="red" /> <span className="button-text">{'Like'}</span>
+        <Button className="like-button-red" onClick={() => createLike(user, postEntity)}>
+          <FontAwesomeIcon icon="heart" color="red" /> <span className="button-text">{likes ? likes.length : '0'}</span>
         </Button>
         &nbsp;
         <Button className="reply-button">
