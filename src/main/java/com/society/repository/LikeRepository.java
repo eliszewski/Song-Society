@@ -17,6 +17,8 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     @Query("select jhiLike from Like jhiLike where jhiLike.user.login = ?#{principal.username}")
     List<Like> findByUserIsCurrentUser();
 
+    List<Like> findByPostId(Long id);
+
     default Optional<Like> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

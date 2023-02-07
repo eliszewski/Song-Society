@@ -175,9 +175,15 @@ public class ProfileResource {
         return ResponseUtil.wrapOrNotFound(profileDTO);
     }
 
+    /**
+     * Get the profile of the author of a post.
+     *
+     * @param id the id of the post
+     * @return the ResponseEntity with status 200 (OK) and the profile of the author, or with status 404 (Not Found)
+     */
     @GetMapping("/profiles/post/{id}")
-    public ResponseEntity<ProfileDTO> getProfileByUserId(Long id) {
-        log.debug("REST request to get  author Profile for post : {}", id);
+    public ResponseEntity<ProfileDTO> getProfileByPostId(Long id) {
+        log.debug("REST request to get author Profile for post : {}", id);
         Long authorId = postRepository.findOneWithEagerRelationships(id).get().getUser().getId();
         Optional<ProfileDTO> profileDTO = profileService.findOneByUserId(authorId);
         return ResponseUtil.wrapOrNotFound(profileDTO);

@@ -11,12 +11,32 @@ import { getEntity } from './post.reducer';
 import { useState } from 'react';
 import { IProfile } from '../../shared/model/profile.model';
 import axios from 'axios';
+import './post-buttons.scss';
+import { ILike } from '../../shared/model/like.model';
+import { IUser } from '../../shared/model/user.model';
+import post from '.';
+import { IPost } from 'app/shared/model/post.model';
 
 export const PostDetail = () => {
   const [author, setAuthor] = useState<IProfile>(null);
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
+
+  const [likes, setLikes] = useState<ILike[]>([]);
+  const [user, setUser] = useState<IUser>();
+
+  const createLike = async (user: IUser, post: IPost): Promise<ILike> => {
+    const date = new Date().toISOString();
+    const like: ILike = { date, user, post };
+    try {
+      const response = await axios.post('/api/likes', like);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     dispatch(getEntity(id));
@@ -28,7 +48,22 @@ export const PostDetail = () => {
       setAuthor(result.data);
     };
     fetchProfile(Number(id));
-    console.log(fetchProfile(Number(id)));
+  }, []);
+
+  useEffect(() => {
+    const fetchLikes = async (id: number) => {
+      const result = await axios.get(`/api//likes/post/{id}?id=${id}`);
+      setLikes(result.data);
+    };
+    fetchLikes(Number(id));
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await axios.get(`/api//account`);
+      setUser(result.data);
+    };
+    fetchUser();
   }, []);
 
   const postEntity = useAppSelector(state => state.post.entity);
@@ -68,6 +103,27 @@ export const PostDetail = () => {
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>
           </span>
+        </Button>
+        &nbsp;
+        <Button className="like-button-red" onClick={() => createLike(user, postEntity)}>
+          <FontAwesomeIcon icon="heart" color="red" /> <span className="button-text">{likes ? likes.length : '0'}</span>
+        </Button>
+        &nbsp;
+        <Button className="reply-button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-arrow-return-right"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
+            />
+          </svg>{' '}
+          <span className="d-none d-md-inline">{'Reply'}</span>
         </Button>
       </Col>
     </Row>
