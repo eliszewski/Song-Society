@@ -16,6 +16,7 @@ import { ILike } from '../../shared/model/like.model';
 import { IUser } from '../../shared/model/user.model';
 import post from '.';
 import { IPost } from 'app/shared/model/post.model';
+import ReplyButton from 'app/customUser/Forms/reply-button';
 
 export const PostDetail = () => {
   const [author, setAuthor] = useState<IProfile>(null);
@@ -109,22 +110,7 @@ export const PostDetail = () => {
           <FontAwesomeIcon icon="heart" color="red" /> <span className="button-text">{likes ? likes.length : '0'}</span>
         </Button>
         &nbsp;
-        <Button className="reply-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-arrow-return-right"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
-            />
-          </svg>{' '}
-          <span className="d-none d-md-inline">{'Reply'}</span>
-        </Button>
+        <ReplyButton post={postEntity} currentUser={user}></ReplyButton>
       </Col>
     </Row>
   );
