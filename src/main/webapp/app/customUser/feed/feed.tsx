@@ -7,10 +7,16 @@ import { APP_DATE_FORMAT } from 'app/config/constants';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IUserProfile } from '../../shared/dto/userProfile.model';
+import ReplyButton from '../Forms/reply-button';
+import authentication, { authenticate } from '../../shared/reducers/authentication';
+import { IUser } from 'app/shared/model/user.model';
+import { getAccount } from '../../shared/reducers/authentication';
+import PostButton from '../Forms/new-post-botton';
 
 export const Feed = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [followedProfiles, setFollowedProfiles] = useState<IUserProfile[]>([]);
+  const [user, setUser] = useState<IUser>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -18,6 +24,11 @@ export const Feed = () => {
       setPosts(result.data);
     };
     fetchPosts();
+    const fetchUser = async () => {
+      const result = await axios.get('/api/account');
+      setUser(result.data);
+    };
+    fetchUser();
   }, []);
 
   useEffect(() => {
@@ -31,6 +42,9 @@ export const Feed = () => {
   return (
     <div>
       <h1>Your feed</h1>
+      <span>
+        <PostButton author={user}></PostButton>
+      </span>
       {posts && posts.length > 0 ? (
         <Table striped bordered hover>
           <thead>
@@ -52,6 +66,8 @@ export const Feed = () => {
                     <Button tag={Link} to={`/post/${post.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                       <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Expand</span>
                     </Button>
+                    &nbsp;
+                    <ReplyButton post={post} currentUser={user}></ReplyButton>
                   </td>
                 </tr>
               );

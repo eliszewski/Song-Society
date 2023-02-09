@@ -1,6 +1,7 @@
 package com.society.service;
 
 import com.society.domain.Like;
+import com.society.domain.Post;
 import com.society.repository.LikeRepository;
 import com.society.service.dto.LikeDTO;
 import com.society.service.mapper.LikeMapper;
@@ -125,4 +126,7 @@ public class LikeService {
     public List<LikeDTO> convertListToDTO(List<Like> likes) {
         return likes.stream().map(likeMapper::toDto).collect(Collectors.toList());
     }
+    // public Boolean userLikePostAlready(Like like, Post post){
+
+    // }
 }
