@@ -17,6 +17,7 @@ import { IUser } from '../../shared/model/user.model';
 import post from '.';
 import { IPost } from 'app/shared/model/post.model';
 import ReplyButton from 'app/customUser/Forms/reply-button';
+import FollowUpdate from '../follow/follow-update';
 
 export const PostDetail = () => {
   const [author, setAuthor] = useState<IProfile>(null);
