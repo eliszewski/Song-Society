@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.swing.text.html.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,5 +161,10 @@ public class ProfileService {
     public Optional<ProfileDTO> findOneByUserId(Long id) {
         log.debug("Request to get Profile for user : {}", id);
         return profileRepository.findOneByUserId(id).map(profileMapper::toDto);
+    }
+
+    public Optional<ProfileDTO> findOneForCurrentUser() {
+        log.debug("Request to get Profile for  current user");
+        return profileRepository.findByUserIsCurrentUser().map(profileMapper::toDto);
     }
 }

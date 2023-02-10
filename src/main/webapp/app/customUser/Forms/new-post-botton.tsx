@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, La
 import { IPost } from 'app/shared/model/post.model';
 import { IReply } from 'app/shared/model/reply.model';
 import { IUser } from 'app/shared/model/user.model';
-import 'app/entities/post/post-buttons.scss';
+import './post-buttons.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface PostButtonProps {
@@ -33,7 +33,7 @@ const PostButton: React.FC<PostButtonProps> = ({ author }) => {
   };
   return (
     <>
-      <Button className="reply-button" onClick={() => setShowModal(true)}>
+      <Button className="new-post" onClick={() => setShowModal(true)}>
         <FontAwesomeIcon icon={'pencil'}></FontAwesomeIcon>
         <span className="d-none d-md-inline">{'New Post'}</span>
       </Button>
