@@ -111,7 +111,7 @@
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "autoprefixer": "10.4.8",
-    "browser-sync": "^2.27.11",
+    "browser-sync": "^2.27.5",
     "browser-sync-webpack-plugin": "2.3.0",
     "concurrently": "7.3.0",
     "copy-webpack-plugin": "11.0.0",

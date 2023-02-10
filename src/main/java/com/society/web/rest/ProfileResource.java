@@ -6,6 +6,7 @@ import com.society.repository.ProfileRepository;
 import com.society.service.ProfileService;
 import com.society.service.dto.ProfileDTO;
 import com.society.service.dto.UserProfileDTO;
+import com.society.service.mapper.ProfileMapper;
 import com.society.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,6 +41,9 @@ public class ProfileResource {
     private final ProfileService profileService;
 
     private final ProfileRepository profileRepository;
+
+    // @Autowired
+    // private ProfileMapper profileMapper;
 
     @Autowired
     private PostRepository postRepository;
@@ -186,6 +190,18 @@ public class ProfileResource {
         log.debug("REST request to get author Profile for post : {}", id);
         Long authorId = postRepository.findOneWithEagerRelationships(id).get().getUser().getId();
         Optional<ProfileDTO> profileDTO = profileService.findOneByUserId(authorId);
+        return ResponseUtil.wrapOrNotFound(profileDTO);
+    }
+
+    /**
+     * GET  /profiles/current-user : get the profile for the current user.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the profile in body, or with status 404 (Not Found) if the profile is not available for the current user.
+     */
+    @GetMapping("/profiles/current-user")
+    public ResponseEntity<ProfileDTO> getProfileForCurrentUser() {
+        log.debug("REST request to get Profile for current user");
+        Optional<ProfileDTO> profileDTO = profileService.findOneForCurrentUser();
         return ResponseUtil.wrapOrNotFound(profileDTO);
     }
 
