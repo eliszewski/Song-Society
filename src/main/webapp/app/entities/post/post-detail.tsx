@@ -18,6 +18,7 @@ import post from '.';
 import { IPost } from 'app/shared/model/post.model';
 import ReplyButton from 'app/customUser/Forms/reply-button';
 import FollowUpdate from '../follow/follow-update';
+import FollowButton from 'app/customUser/Forms/follow-button';
 
 export const PostDetail = () => {
   const [author, setAuthor] = useState<IProfile>(null);
@@ -91,7 +92,11 @@ export const PostDetail = () => {
           <dt>
             <Translate contentKey="songSocietyApp.post.user">User</Translate>
           </dt>
-          <dd>{author ? <a href={`/profile/${author.id}`}>{author.societyTag}</a> : ''}</dd>
+          <dd>
+            {author ? <a href={`/profile/${author.id}`}>{author.societyTag}</a> : ''}
+            &nbsp;
+          <FollowButton followedUser={author} currentUser={user}></FollowButton>
+          </dd>
         </dl>
         <Button tag={Link} to="/feed" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
